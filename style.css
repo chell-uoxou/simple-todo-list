@@ -1,0 +1,14 @@
+#main-list {
+    list-style: none;
+}
+
+#main-list li{
+    list-style: none;
+    transition: all 0.2s 0s ease;
+}
+
+#main-list li.line-through {
+    transition: all 0.2s 0s ease;
+    text-decoration: line-through;
+    color: #d3d3d3;
+  }
