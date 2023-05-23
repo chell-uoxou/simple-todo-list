@@ -1,14 +1,30 @@
-#main-list {
+#taskList {
     list-style: none;
+    padding-left: 0px;
 }
 
-#main-list li{
+#taskList li {
     list-style: none;
     transition: all 0.2s 0s ease;
 }
 
-#main-list li.line-through {
+#taskList span {
+    transition: all 0.2s 0s ease;
+    color: #000000;
+}
+
+#taskList span.done {
     transition: all 0.2s 0s ease;
     text-decoration: line-through;
     color: #d3d3d3;
-  }
+}
+
+#taskList span.hidden {
+    display: none;
+}
+
+
+#taskList input.task-done-checkbox {
+
+    accent-color: #8ad246;
+}
