@@ -1,4 +1,4 @@
-var taskId = 0
+let taskId = 0
 
 function getTaskTitleInput() {
     return document.getElementById("taskTitleInput").value
@@ -10,9 +10,9 @@ function clearTaskTitleInput() {
 }
 
 function createTaskListElement(task) {
-    var listElement = document.createElement('li')
+    let listElement = document.createElement('li')
 
-    var checkbox = document.createElement('')
+    let checkbox = document.createElement('')
 
 }
 
@@ -47,102 +47,79 @@ document.getElementById("addTaskForm").addEventListener("submit", onSubmitAddTas
 
 function addTask(task) {
     taskId++
+    let checkBoxId = 'taskDoneCheckbox_' + taskId       // taskDoneCheckbox_1
+    let doneMessage = '完了'
 
-    var checkBoxId = 'taskDoneCheckbox_' + taskId       // taskDoneCheckbox_1
-
-    // inputタグ （＝チェックボックス自体）
-    var checkBoxHtml = document.createElement('input')  // ただのinputタグを作る
-    checkBoxHtml.setAttribute('type', 'checkbox')       // つくった新しいinputタグの「type」属性に "checkbox" を指定
-    checkBoxHtml.setAttribute('id', checkBoxId)         // つくった新しいinputタグの「id」属性に "checkbox" を指定
-    checkBoxHtml.checked = false                        // つくった新しいinputタグの「checked」属性に true を指定
-
-
-    // やりたいこと
-    // 1. チェックボックスが変更されたことを検知
-    // 2. チェックボックスの状態を取得。
-    // 2. 対応するlabelも取得（制御したいから）
-    // 3. チェックが入ってたら、class属性に"done"を設定
-    // 3. 入ってなかったら、class属性に""を設定
-
-
-
-    var onChangeCheckBox = function (event) {
-        //console.log(event);
-        // console.log(event.target.checked);
-        // console.log(event.target.nextElementSibling);
-        // console.log(event.target);
-        // console.log(event.target.nextElementSibling.children[1]);
-
-        let labelHTML = event.target.nextElementSibling
-        let span1stHTML = labelHTML.children[0]
-        let span2ndHTML = labelHTML.children[1]
-        let deleteButtonHTML = labelHTML.children[2]
+    let onChangeCheckBox = function (event) {
+        let checkBox = event.target
+        let span1stHTML = checkBox.nextElementSibling
+        let span2ndHTML = span1stHTML.nextElementSibling
 
         if (event.target.checked) {
             console.log("チェックされたよ");
-            span1stHTML.setAttribute('class', 'done')
-            span2ndHTML.setAttribute('class', "")
+            span1stHTML.classList.add('done')
+            span2ndHTML.classList.remove('hidden')
         } else {
-            span1stHTML.setAttribute('class', "")
-            span2ndHTML.setAttribute('class', 'hidden')
+            span1stHTML.classList.remove('done')
+            span2ndHTML.classList.add('hidden')
         }
     }
 
-    checkBoxHtml.addEventListener("change", onChangeCheckBox)
-
-    // labelタグ （＝チェックボックスの隣にある文字）
-    var checkBoxLabelHtml = document.createElement('label') // ただのlabelタグを作る
-
-    let spanHTML = document.createElement('span')
-    spanHTML.innerHTML = task
-
-    let doneMassageHTML = document.createElement('span')
-    doneMassageHTML.innerHTML = "[完了]"
-    doneMassageHTML.setAttribute('class', 'hidden')
-
-    let deleteButtonHTML = document.createElement('button')
-    let trashIconHTML = document.createElement('i')
-    trashIconHTML.setAttribute('class', 'fa-solid fa-trash')
-    deleteButtonHTML.appendChild(trashIconHTML)
-
-    let onDeleteButtonClick = function(event){
+    let onDeleteButtonClick = function (event) {
         console.log(event);
         console.log(event.currentTarget.parentElement);
         let parent = event.currentTarget.parentElement.parentElement
         parent.remove()
     }
 
-    // deleteButtonHTML.addEventListener('click', onDeleteButtonClick) 
-    deleteButtonHTML.onclick = onDeleteButtonClick
+    // checkbox
+    let checkBoxHtml = document.createElement('input')          // ただのinputタグを作る
+    checkBoxHtml.setAttribute('type', 'checkbox')               // 作った新しいinputタグの「type」属性に "checkbox" を指定
+    checkBoxHtml.setAttribute('id', checkBoxId)                 // 作った新しいinputタグの「id」属性に "checkbox" を指定
+    checkBoxHtml.setAttribute('class', 'form-check-input')      // 作った新しいinputタグの「class」属性に "form-check-input" を指定
+    checkBoxHtml.addEventListener("change", onChangeCheckBox)   // 作った新しいinputタグの「change」イベントに onChangeCheckBox を指定
+    
+    // span 1
+    let spanHTML = document.createElement('span')               // ただのspanタグを作る
+    spanHTML.setAttribute('class', 'px-2')
+    spanHTML.innerHTML = task                                   // 作った新しいspanタグの中に「みそきん買う」という文字を入れる
 
-    checkBoxLabelHtml.appendChild(spanHTML)
-    checkBoxLabelHtml.appendChild(doneMassageHTML)
-    checkBoxLabelHtml.appendChild(deleteButtonHTML)
+    // span 2
+    let doneMassageHTML = document.createElement('span')        // ただのspanタグを作る
+    doneMassageHTML.innerHTML = doneMessage                     // 作った新しいspanタグの中に「完了」という文字を入れる
+    doneMassageHTML.setAttribute('class', 'badge bg-success rounded-pill')   // Bootstrapの緑色のバッジのスタイルを指定
+    doneMassageHTML.classList.add('hidden')                     // 「完了」の文字は最初は非表示にしておく
 
-    // checkBoxLabelHtml.innerText = task                   // 作った新しいlabelタグで囲われた中のテキストを「みそきん買う」を指定
+    // text container (リストの左端に寄せたいものを入れる)
+    let checkBoxTextContainerHTML = document.createElement('div')
+    checkBoxTextContainerHTML.setAttribute('class', 'flex-grow-1')
+    checkBoxTextContainerHTML.appendChild(checkBoxHtml)
+    checkBoxTextContainerHTML.appendChild(spanHTML)
+    checkBoxTextContainerHTML.appendChild(doneMassageHTML)    
+    
+    // delete icon（ボタンの中に表示する）
+    let trashIconHTML = document.createElement('i')                             // ただのiタグを作る
+    trashIconHTML.setAttribute('class', 'fa-solid fa-trash')                    // fontawesomeのゴミ箱アイコンを指定
+    
+    // delete button
+    let deleteButtonHTML = document.createElement('button')                     // ただのbuttonタグを作る
+    deleteButtonHTML.appendChild(trashIconHTML)                                 // 作った新しいbuttonタグの中に作ったiタグを入れる
+    deleteButtonHTML.setAttribute('class', 'btn btn-outline-danger btn-sm')     // Bootstrapの赤色＆アウトライン＆小さいボタンのスタイルを指定
+    deleteButtonHTML.addEventListener('click', onDeleteButtonClick)             // 作った新しいbuttonタグの「click」イベントに onDeleteButtonClick を指定
+    
+    // list container （左端にtext containerを、右端にdelete buttonを入れる）
+    let liContainerHTML = document.createElement('div')
+    liContainerHTML.setAttribute('class', 'd-flex justify-content-between align-items-center')
+    liContainerHTML.appendChild(checkBoxTextContainerHTML)
+    liContainerHTML.appendChild(deleteButtonHTML)
+    
+    // label （＝クリックするとチェックボックスが連動して反応するエリア）
+    let checkBoxLabelHtml = document.createElement('label')
+    checkBoxLabelHtml.appendChild(liContainerHTML)
     checkBoxLabelHtml.setAttribute('for', checkBoxId)       // 作った新しいinputタグの「id」属性に "checkbox" を指定
+    checkBoxLabelHtml.setAttribute('class', 'list-group-item list-group-item-action')
 
-    var listHtml = document.createElement('li')
-    console.log("1. ", listHtml.outerHTML);
-    // <li>
-    // </li>
-
-    listHtml.appendChild(checkBoxHtml)
-    console.log("2. ", listHtml.outerHTML);
-    // <li>
-    //     <input type="checkbox" id="taskDoneCheckbox_1" checked></input>
-    // </li>
-
-    listHtml.appendChild(checkBoxLabelHtml)
-    console.log("3. ", listHtml.outerHTML);
-    // <li>
-    //     <input type="checkbox" id="taskDoneCheckbox_1" checked></input>
-    //     <label for="taskDoneCheckbox_1">みそきん買う</label>
-    // </li>
-
-    console.log("added list html:", listHtml)
-
-    document.getElementById("taskList").appendChild(listHtml)
+    document.getElementById("taskList").appendChild(checkBoxLabelHtml)
 }
 
 
