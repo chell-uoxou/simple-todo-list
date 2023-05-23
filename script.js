@@ -11,6 +11,30 @@ function createTaskListElement(task) {
 
 }
 
+function onClickPractice1() {
+
+    var sayHello = function() {
+        console.log("Hello!")
+        console.log("World!")
+        console.log("Hello!")
+        a = 1 + 2
+        console.log(a);
+    }
+
+    console.log(sayHello);
+
+}
+
+risuna = function(event) {
+    console.log("入力:" + event.target.value);
+    console.log("計算結果" + (5 * Number(event.target.value)));
+}
+
+
+document.getElementById("taskTitleInput").addEventListener("input", risuna)
+
+
+
 function onClickAddButton() {
     console.log("created new task: " + getTaskTitleInput());
 
@@ -42,6 +66,7 @@ function addTask(task) {
     var checkBoxHtml = document.createElement('input')  // ただのinputタグを作る
     checkBoxHtml.setAttribute('type', 'checkbox')       // つくった新しいinputタグの「type」属性に "checkbox" を指定
     checkBoxHtml.setAttribute('id', checkBoxId)         // つくった新しいinputタグの「id」属性に "checkbox" を指定
+    checkBoxHtml.setAttribute('class', 'task-done-checkbox')
     checkBoxHtml.checked = false                        // つくった新しいinputタグの「checked」属性に false を指定
     checkBoxHtml.addEventListener('change', function () {
         this.parentElement.setAttribute('class',
