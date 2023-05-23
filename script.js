@@ -16,7 +16,9 @@ function createTaskListElement(task) {
 
 }
 
-function onClickAddButton() {
+function onSubmitAddTaskForm(event) {
+    event.preventDefault()
+
     console.log("created new task: " + getTaskTitleInput());
 
     if (getTaskTitleInput() == "") {
@@ -28,6 +30,8 @@ function onClickAddButton() {
     clearTaskTitleInput()
 
 }
+
+document.getElementById("addTaskForm").addEventListener("submit", onSubmitAddTaskForm)
 
 // // 指定されたtaskを画面上のリストに追加する
 // function addTask(task) {

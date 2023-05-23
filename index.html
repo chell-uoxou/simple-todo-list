@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/295fda8d41.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<head>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/295fda8d41.js" crossorigin="anonymous"></script>
-</head>
+  <body>
+    <h1>ToDo List</h1>
 
-<body>
-    <h1>
-        ToDo List
-    </h1>
+    <form id="addTaskForm">
+      <input type="text" name="" id="taskTitleInput" />
+      <button type="submit" id="addTaskButton" value="">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </form>
 
-    <input type="text" name="" id="taskTitleInput">
+    <div></div>
 
-    <button id="addTaskButton" onclick="onClickAddButton()">
-        追加
-    </button>
+    <ul id="taskList"></ul>
+  </body>
 
-    <div>
-
-    </div>
-
-    <ul id="taskList">
-    </ul>
-</body>
-
-<script src="script.js"></script>
-
+  <script src="script.js"></script>
 </html>
