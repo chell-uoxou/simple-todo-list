@@ -7,13 +7,6 @@ function getTaskTitleInput() {
 
 function clearTaskTitleInput() {
     document.getElementById("taskTitleInput").value = ""
-
-}
-
-function createTaskListElement(task) {
-    let listElement = document.createElement('li')
-
-    let checkbox = document.createElement('')
 }
 
 function updateStatusText(text) {
@@ -121,7 +114,6 @@ function addTaskHTML(taskObject) {
             span1stHTML.classList.remove('done')
             span2ndHTML.classList.add('hidden')
         }
-
         updateStatus()
     }
 
